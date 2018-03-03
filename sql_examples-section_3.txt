@@ -1,0 +1,46 @@
+
+Question 1:
+SELECT
+    Date, ZIP,
+    MAX(MaxTemperatureF) Max_Temp
+FROM
+    weather
+Answer:
+Date        ZIP   Max_Temp
+2015-11-17  94063 134
+
+
+Question 2:
+SELECT
+    start_station,
+    COUNT(*) number_of_trips
+FROM
+    trips
+GROUP by 1
+
+Answer:
+large list omitted
+
+Question 3:
+SELECT
+    trip_id,
+	start_station,
+	end_station,
+    MIN(duration) Shortest_trip
+FROM
+    trips
+
+Answer: trip_id start_station end_station duration
+        1011650	Mezes	      Mezes	      60
+
+
+Question 4:
+SELECT
+	end_station,
+    Avg(duration) Avg_trip
+FROM
+    trips
+GROUP by 1
+
+Answer:
+large list omitted
