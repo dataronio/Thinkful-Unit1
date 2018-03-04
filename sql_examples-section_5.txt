@@ -1,0 +1,94 @@
+# Using Austin, Texas AirBnB Files #
+
+Question 1:
+Greatest overall price per diem.
+SELECT
+host_name,
+host_location,
+bathrooms,
+bedrooms,
+cast(replace(substr(price,2),',','') as real) real_price
+from
+listings
+
+order by real_price DESC
+Limit 3
+
+Answer:
+"James"	""	"4.0"	"4"	"10000.0"
+"Beverly"	"Austin, Texas, United States"	"1.0"	"1"	"10000.0"
+"Eli"	"Austin, Texas, United States"	"3.0"	"4"	"10000.0"
+
+Question 2:
+Greatest weekly price?
+SELECT
+host_name,
+host_location,
+bathrooms,
+bedrooms,
+cast(replace(substr(weekly_price,2),',','') as real) real_price
+from
+listings
+
+order by real_price DESC
+Limit 3
+
+Answer:
+"Erik"	"Austin, Texas, United States"	"2.5"	"4"	"14000.0"
+"Doug"	"Austin, Texas, United States"	"6.0"	"6"	"14000.0"
+"Terry"	"US"	"4.0"	"4"	"14000.0"
+
+Question 3:
+Most popular neighborhoods? I find this by counting listings by zipcode.
+
+SELECT
+zipcode,
+Count(*) count
+from
+listings
+GROUP BY 1
+order by count DESC
+Limit 10
+
+Answer:  Top ten neighborhoods in Austin, TX for AirBnB listings
+
+"78704"	"1994"
+"78702"	"1202"
+"78703"	"642"
+"78741"	"631"
+"78705"	"509"
+"78745"	"505"
+"78751"	"426"
+"78701"	"387"
+"78723"	"335"
+"78746"	"296"
+
+Question 4:
+Find the cheapest time to go to Austin.
+I choose to average calendar listings by month.
+
+SELECT
+substr(date,6,2) month,
+avg(cast(replace(substr(price,2),',','') as real)) avg_price
+from
+calendar
+GROUP BY 1
+order by avg_price
+
+
+Answer:
+
+"11"	"131.908403187416"
+"09"	"132.438573251923"
+"04"	"135.618358687778"
+"10"	"143.131098670352"
+"06"	"144.576139225223"
+"07"	"148.828103874773"
+"03"	"149.917033045905"
+"08"	"152.282794697433"
+"05"	"153.618488214106"
+"12"	"158.401014177792"
+"01"	"159.552513244735"
+"02"	"161.800535178368"
+
+Looks like November has the lowest prices. February has the highest.
