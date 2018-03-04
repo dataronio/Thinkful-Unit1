@@ -1,0 +1,89 @@
+Question 1:
+-- Set up the CTE to create a rainy_days table.
+WITH
+    rainy_days
+AS (
+    
+    SELECT
+	    Date,
+--        ZIP,
+        Events,
+    FROM
+        weather
+    WHERE Events = 'Rain'
+    GROUP BY 1
+--  GROUP BY 1,2
+)
+
+SELECT
+    duration,
+    DATE(start_date) trip_date
+FROM
+    trips t
+JOIN
+    rainy_days r
+ON
+    trip_date = r.Date 
+--    AND
+--	t.zip_code = ZIP
+ORDER BY duration DESC
+LIMIT 3
+
+Question 2:
+
+SELECT
+   s.station_id,
+   st.name,
+   count(CASE WHEN s.docks_available = 0  THEN 1 ELSE NULL  END) station_full
+
+FROM 
+    status s
+JOIN
+    stations st
+WHERE
+    s.station_id = st.station_id
+Group By 1
+ORDER BY station_full DESC
+Limit 1
+
+Question 3:
+
+SELECT
+   st.station_id,
+   st.name,
+   st.dockcount,
+   count(t.start_terminal) count_trips
+FROM 
+    trips t
+JOIN
+    stations st
+ON
+    t.start_station = st.name
+Group By 2,3
+ORDER BY st.dockcount DESC
+
+Question 4:
+
+-- Set up the CTE to create a rainy_days table.
+WITH
+    rainy_days
+AS (    
+    SELECT
+	    Date
+    FROM
+        weather
+    WHERE Events = 'Rain'
+    GROUP BY 1
+)
+
+SELECT
+     DATE(start_date) rain_trip
+     MAX(t.duration)  
+FROM
+    trips t
+JOIN
+    rainy_days r
+ON rain_trip = r.date
+GROUP BY 1
+ORDER BY duration DESC
+
